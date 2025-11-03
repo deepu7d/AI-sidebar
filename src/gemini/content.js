@@ -195,7 +195,7 @@ function observeChatChanges() {
         if (node.nodeType === 1) { // Element node
           // Check if it's the user-query-content custom element
           return node.tagName === 'USER-QUERY-CONTENT' || 
-                 node.querySelector?.('user-query-content') !== null;
+                 node.querySelector?.('user-query-content') !== null; // might remove this
         }
         return false;
       });
