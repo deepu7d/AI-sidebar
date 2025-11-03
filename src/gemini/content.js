@@ -80,28 +80,13 @@ function closeSidebar() {
   container.classList.add('gemini-sidebar-closed');
 }
 
-
-
 // Load all prompts from the chat
 function loadPrompts() {
   const promptsContainer = document.getElementById('sidebar-prompts');
   if (!promptsContainer) return;
 
-  // Try multiple selectors to find user query elements
-  let userQueryElements = [];
-  
-  // Try finding elements with class 'user-query-content' (most specific)
-  userQueryElements = document.querySelectorAll('.user-query-content');
-  
-  // If not found, try 'user-query'
-  if (userQueryElements.length === 0) {
-    userQueryElements = document.querySelectorAll('.user-query');
-  }
-  
-  // If still not found, try other common patterns
-  if (userQueryElements.length === 0) {
-    userQueryElements = document.querySelectorAll('[class*="user"]');
-  }
+  // Use getElementsByTagName to find user-query-content custom elements
+  const userQueryElements = document.getElementsByTagName('user-query-content');
   
   if (userQueryElements.length === 0) {
     promptsContainer.innerHTML = '<p class="no-prompts">No prompts found in this chat.</p>';
@@ -112,21 +97,15 @@ function loadPrompts() {
   promptsContainer.innerHTML = '';
 
   let promptCount = 0;
-  const seenTexts = new Set(); // Track unique prompts to avoid duplicates
   
-  // Process each user query element
-  userQueryElements.forEach((queryElement) => {
+  // Convert HTMLCollection to Array and process each user query element
+  Array.from(userQueryElements).forEach((queryElement) => {
+    console.log("Called")
     // Find the first <p> tag within the element
     const firstP = queryElement.querySelector('p');
     
     if (firstP && firstP.textContent.trim()) {
       const text = firstP.textContent.trim();
-      
-      // Skip if we've already seen this exact text (deduplication)
-      if (seenTexts.has(text)) {
-        return;
-      }
-      seenTexts.add(text);
       
       promptCount++;
       const promptItem = document.createElement('div');
@@ -170,6 +149,7 @@ function loadPrompts() {
 
 // Navigate to a specific prompt in the chat
 function navigateToPrompt(element, pElement) {
+  closeSidebar();
   // Scroll to the paragraph element for better precision
   const targetElement = pElement || element;
   targetElement.scrollIntoView({ 
@@ -209,15 +189,13 @@ const debouncedLoadPrompts = debounce(loadPrompts, 500);
 // Observe DOM changes to detect new prompts
 function observeChatChanges() {
   const observer = new MutationObserver((mutations) => {
-    // Check if new user query elements were added
+    // Check if new user-query-content elements were added
     const hasNewQueries = mutations.some(mutation => {
       return Array.from(mutation.addedNodes).some(node => {
         if (node.nodeType === 1) { // Element node
-          return node.classList?.contains('user-query') || 
-                 node.classList?.contains('user-query-content') ||
-                 node.querySelector?.('.user-query') ||
-                 node.querySelector?.('.user-query-content') ||
-                 (node.className && typeof node.className === 'string' && node.className.includes('user'));
+          // Check if it's the user-query-content custom element
+          return node.tagName === 'USER-QUERY-CONTENT' || 
+                 node.querySelector?.('user-query-content') !== null;
         }
         return false;
       });
@@ -281,14 +259,13 @@ function checkUrlChange() {
   const newChatId = urlMatch ? urlMatch[1] : null;
   
   if (newChatId !== currentChatId) {
-    currentChatId = newChatId;
+    console.log("Chat changed, reloading prompts");
     closeSidebar();
+    currentChatId = newChatId;
   }
 }
 
-// Monitor URL changes for navigation between chats
 function observeUrlChanges() {
-  // Check URL on initial load
   checkUrlChange();
   
   // Listen for popstate (back/forward navigation)
@@ -299,8 +276,6 @@ function observeUrlChanges() {
     window.navigation.addEventListener('navigate', checkUrlChange);
   }
   
-  // Periodic check as backup (less frequent)
-  setInterval(checkUrlChange, 3000);
 }
 
 // Initialize when DOM is ready
