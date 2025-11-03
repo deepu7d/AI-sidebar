@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Gemini Chat Sidebar",
+  "version": "1.0",
+  "description": "View and navigate through all your Gemini chat prompts in a beautiful sidebar",
+  "permissions": ["activeTab"],
+  "content_scripts": [
+    {
+      "matches": ["https://gemini.google.com/*"],
+      "js": ["content.js"],
+      "css": ["sidebar.css"],
+      "run_at": "document_end"
+    }
+  ]
+}
