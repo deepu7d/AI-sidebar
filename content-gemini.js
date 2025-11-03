@@ -44,6 +44,16 @@ function createSidebar() {
   toggleButton.addEventListener('click', toggleSidebar);
   document.getElementById('sidebar-close').addEventListener('click', closeSidebar);
 
+  // Add ESC key listener to close sidebar
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      const container = document.getElementById('gemini-sidebar-container');
+      if (container && container.classList.contains('gemini-sidebar-open')) {
+        closeSidebar();
+      }
+    }
+  });
+
   // Initial load of prompts
   loadPrompts();
 
@@ -182,6 +192,18 @@ function highlightPrompt(element) {
   }, 2000);
 }
 
+// Debounce utility function
+function debounce(func, wait) {
+  let timeout;
+  return function(...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
+
+// Create debounced version of loadPrompts
+const debouncedLoadPrompts = debounce(loadPrompts, 500);
+
 // Observe DOM changes to detect new prompts
 function observeChatChanges() {
   const observer = new MutationObserver((mutations) => {
@@ -200,17 +222,51 @@ function observeChatChanges() {
     });
 
     if (hasNewQueries) {
-      // Reload prompts when new ones are detected
-      setTimeout(loadPrompts, 500); // Small delay to ensure DOM is fully updated
+      // Use debounced version to avoid multiple rapid calls
+      debouncedLoadPrompts();
     }
   });
 
-  // Observe the main chat container
-  const chatContainer = document.body;
-  observer.observe(chatContainer, {
-    childList: true,
-    subtree: true
-  });
+  // Find the specific chat container (infinite-scroller or chat-history)
+  const findChatContainer = () => {
+    // Try to find the infinite-scroller element
+    let chatContainer = document.querySelector('infinite-scroller[data-test-id="chat-history-container"]');
+    
+    // Fallback to other possible containers
+    if (!chatContainer) {
+      chatContainer = document.querySelector('infinite-scroller');
+    }
+    if (!chatContainer) {
+      chatContainer = document.querySelector('.chat-history');
+    }
+    if (!chatContainer) {
+      chatContainer = document.querySelector('[class*="conversation"]');
+    }
+    
+    return chatContainer;
+  };
+
+  // Try to find the chat container
+  const chatContainer = findChatContainer();
+  
+  if (chatContainer) {
+    // Observe only the specific chat container, not the entire body
+    observer.observe(chatContainer, {
+      childList: true,
+      subtree: true
+    });
+  } else {
+    // If we can't find a specific container, retry after a short delay
+    setTimeout(() => {
+      const retryContainer = findChatContainer();
+      if (retryContainer) {
+        observer.observe(retryContainer, {
+          childList: true,
+          subtree: true
+        });
+      }
+    }, 1000);
+  }
 }
 
 // Track current URL to detect chat changes
@@ -224,25 +280,7 @@ function checkUrlChange() {
   
   if (newChatId !== currentChatId) {
     currentChatId = newChatId;
-    
-    // Clear any pending reload
-    if (urlChangeTimeout) {
-      clearTimeout(urlChangeTimeout);
-    }
-    
-    // Initial immediate load
-    loadPrompts();
-    
-    // Retry loading every second for 5 seconds (in case content is still loading)
-    let retryCount = 0;
-    urlChangeTimeout = setInterval(() => {
-      retryCount++;
-      loadPrompts();
-      
-      if (retryCount >= 5) {
-        clearInterval(urlChangeTimeout);
-      }
-    }, 500);
+    closeSidebar();
   }
 }
 
@@ -251,21 +289,16 @@ function observeUrlChanges() {
   // Check URL on initial load
   checkUrlChange();
   
-  // Use MutationObserver to detect navigation changes
-  const observer = new MutationObserver(() => {
-    checkUrlChange();
-  });
-  
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
-  
-  // Also listen for popstate (back/forward navigation)
+  // Listen for popstate (back/forward navigation)
   window.addEventListener('popstate', checkUrlChange);
   
-  // Check periodically as backup
-  setInterval(checkUrlChange, 2000);
+  // Use navigation API if available (modern browsers)
+  if ('navigation' in window) {
+    window.navigation.addEventListener('navigate', checkUrlChange);
+  }
+  
+  // Periodic check as backup (less frequent)
+  setInterval(checkUrlChange, 3000);
 }
 
 // Initialize when DOM is ready
@@ -275,12 +308,7 @@ if (document.readyState === 'loading') {
     observeUrlChanges();
   });
 } else {
+  // DOM is already loaded
   createSidebar();
   observeUrlChanges();
 }
-
-// Also try to initialize after a short delay (for dynamic content)
-setTimeout(() => {
-  createSidebar();
-  observeUrlChanges();
-}, 1000);
