@@ -80,6 +80,8 @@ function closeSidebar() {
   container.classList.add('gemini-sidebar-closed');
 }
 
+
+
 // Load all prompts from the chat
 function loadPrompts() {
   const promptsContainer = document.getElementById('sidebar-prompts');

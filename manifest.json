@@ -7,14 +7,14 @@
   "content_scripts": [
     {
       "matches": ["https://gemini.google.com/*"],
-      "js": ["content-gemini.js"],
-      "css": ["sidebar-gemini.css"],
+      "js": ["src/gemini/content.js"],
+      "css": ["src/gemini/sidebar.css"],
       "run_at": "document_end"
     },
     {
       "matches": ["https://chatgpt.com/*"],
-      "js": ["content-chatgpt.js"],
-      "css": ["sidebar-chatgpt.css"],
+      "js": ["src/chatgpt/content.js"],
+      "css": ["src/chatgpt/sidebar.css"],
       "run_at": "document_end"
     }
   ]
