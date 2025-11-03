@@ -1,3 +1,3 @@
-# Gemini Chat Sidebar Extension
+# Chat Bot Sidebar Extension
 
-A beautiful Chrome extension that adds a toggleable sidebar to Gemini chats, displaying all your prompts with easy navigation.
+A beautiful Chrome extension that adds a toggleable sidebar, displaying all your prompts with easy navigation.
