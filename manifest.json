@@ -1,14 +1,20 @@
 {
   "manifest_version": 3,
-  "name": "Gemini Chat Sidebar",
+  "name": "AI Chat Sidebar",
   "version": "1.0",
-  "description": "View and navigate through all your Gemini chat prompts in a beautiful sidebar",
+  "description": "View and navigate through all your chat prompts in a beautiful sidebar - works with Gemini and ChatGPT",
   "permissions": ["activeTab"],
   "content_scripts": [
     {
       "matches": ["https://gemini.google.com/*"],
-      "js": ["content.js"],
-      "css": ["sidebar.css"],
+      "js": ["content-gemini.js"],
+      "css": ["sidebar-gemini.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://chatgpt.com/*"],
+      "js": ["content-chatgpt.js"],
+      "css": ["sidebar-chatgpt.css"],
       "run_at": "document_end"
     }
   ]
