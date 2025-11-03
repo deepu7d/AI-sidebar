@@ -97,7 +97,6 @@ function loadPrompts() {
   promptsContainer.innerHTML = '';
 
   let promptCount = 0;
-  const seenTexts = new Set(); // Track unique prompts to avoid duplicates
   
   // Process each user article element
   userArticles.forEach((article) => {
@@ -108,11 +107,6 @@ function loadPrompts() {
     if (messageDiv && messageDiv.textContent.trim()) {
       const text = messageDiv.textContent.trim();
       
-      // Skip if we've already seen this exact text (deduplication)
-      if (seenTexts.has(text)) {
-        return;
-      }
-      seenTexts.add(text);
       
       promptCount++;
       const promptItem = document.createElement('div');
@@ -164,6 +158,7 @@ function navigateToPrompt(element) {
     behavior: 'smooth', 
     block: 'center'
   });
+  closeSidebar()
 }
 
 // Highlight the selected prompt temporarily
@@ -179,7 +174,7 @@ function highlightPrompt(element) {
   // Remove highlight after 2 seconds
   setTimeout(() => {
     element.classList.remove('chatgpt-highlight');
-  }, 2000);
+  }, 1000);
 }
 
 // Observe DOM changes to detect new prompts
