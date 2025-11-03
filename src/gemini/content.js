@@ -171,7 +171,7 @@ function highlightPrompt(element) {
   // Remove highlight after 2 seconds
   setTimeout(() => {
     element.classList.remove('gemini-highlight');
-  }, 2000);
+  }, 1000);
 }
 
 // Debounce utility function
