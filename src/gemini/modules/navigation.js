@@ -36,7 +36,6 @@ function checkUrlChange() {
 
   if (newChatId !== currentChatId) {
     console.log('URL changed');
-    loadPrompts();
     closeSidebar();
     currentChatId = newChatId;
   }

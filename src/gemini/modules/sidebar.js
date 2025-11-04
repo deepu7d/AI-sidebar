@@ -84,7 +84,7 @@ function openSidebar() {
     container.classList.remove('gemini-sidebar-closed');
     container.classList.add('gemini-sidebar-open');
     // Optionally refresh prompts when opening
-    // loadPrompts();
+    loadPrompts();
   }
 }
 
@@ -94,7 +94,7 @@ function toggleSidebar() {
   if (container.classList.contains('gemini-sidebar-closed')) {
     container.classList.remove('gemini-sidebar-closed');
     container.classList.add('gemini-sidebar-open');
-    // loadPrompts(); // Refresh prompts when opening
+    loadPrompts(); // Refresh prompts when opening
   } else {
     closeSidebar();
   }
