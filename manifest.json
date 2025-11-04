@@ -5,18 +5,30 @@
   "description": "View and navigate through all your chat prompts in a beautiful sidebar - works with Gemini and ChatGPT",
   "permissions": ["activeTab"],
   "icons": {
-    "512": "icon.png"
+    "512": "public/assets/icon.png"
   },
   "content_scripts": [
     {
       "matches": ["https://gemini.google.com/*"],
-      "js": ["src/gemini/content.js"],
+      "js": [
+        "src/shared/utils.js",
+        "src/gemini/modules/sidebar.js",
+        "src/gemini/modules/dom.js",
+        "src/gemini/modules/navigation.js",
+        "src/gemini/modules/main.js"
+      ],
       "css": ["src/gemini/sidebar.css"],
       "run_at": "document_end"
     },
     {
       "matches": ["https://chatgpt.com/*"],
-      "js": ["src/chatgpt/content.js"],
+      "js": [
+        "src/shared/utils.js",
+        "src/chatgpt/modules/sidebar.js",
+        "src/chatgpt/modules/dom.js",
+        "src/chatgpt/modules/navigation.js",
+        "src/chatgpt/modules/main.js"
+      ],
       "css": ["src/chatgpt/sidebar.css"],
       "run_at": "document_end"
     }
