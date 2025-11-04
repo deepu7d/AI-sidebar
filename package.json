@@ -1,0 +1,20 @@
+{
+  "name": "ai-chat-sidebar",
+  "version": "1.0.0",
+  "description": "View and navigate through all your chat prompts in a beautiful sidebar - works with Gemini and ChatGPT",
+  "scripts": {
+    "format": "prettier --write \"src/**/*.{js,css,json}\"",
+    "format:check": "prettier --check \"src/**/*.{js,css,json}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.1.0"
+  },
+  "keywords": [
+    "chrome-extension",
+    "chatgpt",
+    "gemini",
+    "sidebar"
+  ],
+  "author": "",
+  "license": "MIT"
+}
