@@ -4,6 +4,9 @@
   "version": "1.0",
   "description": "View and navigate through all your chat prompts in a beautiful sidebar - works with Gemini and ChatGPT",
   "permissions": ["activeTab"],
+  "icons": {
+    "512": "icon.png"
+  },
   "content_scripts": [
     {
       "matches": ["https://gemini.google.com/*"],
