@@ -262,34 +262,34 @@ function observeChatChanges() {
 }
 
 // Track current URL to detect chat changes
-// let currentChatId = null;
-// let urlChangeTimeout = null;
+let currentChatId = null;
+let urlChangeTimeout = null;
 
-// // Check if URL has changed (different chat)
-// function checkUrlChange() {
-//   const urlMatch = window.location.href.match(/\/app\/([a-f0-9]+)/);
-//   const newChatId = urlMatch ? urlMatch[1] : null;
+// Check if URL has changed (different chat)
+function checkUrlChange() {
+  const urlMatch = window.location.href.match(/\/app\/([a-f0-9]+)/);
+  const newChatId = urlMatch ? urlMatch[1] : null;
   
-//   if (newChatId !== currentChatId) {
-//     console.log("URL changed");
-//     closeSidebar();
-//     processedPrompts.clear();
-//     currentChatId = newChatId;
-//   }
-// }
+  if (newChatId !== currentChatId) {
+    console.log("URL changed");
+    closeSidebar();
+    processedPrompts.clear();
+    currentChatId = newChatId;
+  }
+}
 
-// function observeUrlChanges() {
-//   checkUrlChange();
+function observeUrlChanges() {
+  checkUrlChange();
   
-//   // Listen for popstate (back/forward navigation)
-//   window.addEventListener('popstate', checkUrlChange);
+  // Listen for popstate (back/forward navigation)
+  window.addEventListener('popstate', checkUrlChange);
   
-//   // Use navigation API if available (modern browsers)
-//   if ('navigation' in window) {
-//     window.navigation.addEventListener('navigate', checkUrlChange);
-//   }
+  // Use navigation API if available (modern browsers)
+  if ('navigation' in window) {
+    window.navigation.addEventListener('navigate', checkUrlChange);
+  }
   
-// }
+}
 
 // Initialize when DOM is ready
 if (document.readyState === 'loading') {

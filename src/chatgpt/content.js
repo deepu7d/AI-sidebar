@@ -236,27 +236,20 @@ function checkUrlChange() {
   }
 }
 
-// Monitor URL changes for navigation between chats
+
 function observeUrlChanges() {
-  // Check URL on initial load
   checkUrlChange();
   
-  // Use MutationObserver to detect navigation changes
-  const observer = new MutationObserver(() => {
-    checkUrlChange();
-  });
-  
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
-  
-  // Also listen for popstate (back/forward navigation)
+  // Listen for popstate (back/forward navigation)
   window.addEventListener('popstate', checkUrlChange);
   
-  // Check periodically as backup
-  setInterval(checkUrlChange, 2000);
+  // Use navigation API if available (modern browsers)
+  if ('navigation' in window) {
+    window.navigation.addEventListener('navigate', checkUrlChange);
+  }
+  
 }
+
 
 // Initialize when DOM is ready
 if (document.readyState === 'loading') {
