@@ -70,7 +70,7 @@ function loadPrompts() {
     }
   }
 }
-
+const debouncedLoadPrompts = debounce(loadPrompts, 500);
 // Observe DOM changes to detect new prompts
 function observeChatChanges() {
   const observer = new MutationObserver((mutations) => {
@@ -95,7 +95,7 @@ function observeChatChanges() {
 
     if (hasNewQueries) {
       // Reload prompts when new ones are detected
-      setTimeout(loadPrompts, 500); // Small delay to ensure DOM is fully updated
+      debouncedLoadPrompts();
     }
   });
 
