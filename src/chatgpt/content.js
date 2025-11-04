@@ -54,6 +54,17 @@ function createSidebar() {
     }
   });
 
+    // Add click outside listener to close sidebar
+  document.addEventListener('click', (e) => {
+    const container = document.getElementById('chatgpt-sidebar-container');
+    if (container && container.classList.contains('chatgpt-sidebar-open')) {
+      // Check if click is outside the sidebar
+      if (!sidebarContainer.contains(e.target)) {
+        closeSidebar();
+      }
+    }
+  });
+
   // Initial load of prompts
   loadPrompts();
 
