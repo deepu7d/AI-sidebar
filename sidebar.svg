@@ -1,0 +1,21 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with gradient -->
+  <defs>
+    <linearGradient id="blueGradient" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2E8BC0"/>
+      <stop offset="100%" stop-color="#5DB3E8"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Left panel -->
+  <path d="M0 128C0 57.3076 57.3076 0 128 0H154V512H128C57.3076 512 0 454.692 0 384V128Z" fill="url(#blueGradient)"/>
+  
+  <!-- Right panel (with arrow) -->
+  <path d="M186 0H384C454.692 0 512 57.3076 512 128V384C512 454.692 454.692 512 384 512H186V0Z" fill="url(#blueGradient)"/>
+  
+  <!-- White separator line -->
+  <rect x="154" y="0" width="32" height="512" fill="white"/>
+  
+  <!-- Left-pointing chevron arrow -->
+  <path d="M332 384C341.6 384 351.2 380.4 358.4 373.2C372.8 358.8 372.8 335.2 358.4 320.8L294.4 256L358.4 191.2C372.8 176.8 372.8 153.2 358.4 138.8C344 124.4 320.4 124.4 306 138.8L216.8 228C202.4 242.4 202.4 266 216.8 280.4L306 369.6C313.2 376.8 322.8 384 332 384Z" fill="white"/>
+</svg>
