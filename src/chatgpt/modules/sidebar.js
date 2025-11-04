@@ -42,7 +42,9 @@ function createSidebar() {
   document.body.appendChild(sidebarContainer);
 
   // Add event listeners
-  toggleButton.addEventListener('click', toggleSidebar);
+  // Open sidebar when hovering over the toggle/sidebar container, close when leaving
+  sidebarContainer.addEventListener('mouseenter', openSidebar);
+  sidebarContainer.addEventListener('mouseleave', closeSidebar);
   document
     .getElementById('sidebar-close')
     .addEventListener('click', closeSidebar);
@@ -73,6 +75,18 @@ function createSidebar() {
 
   // Set up observer to detect new prompts
   observeChatChanges();
+}
+
+// Toggle sidebar open/closed
+// Open sidebar
+function openSidebar() {
+  const container = document.getElementById('chatgpt-sidebar-container');
+  if (container && container.classList.contains('chatgpt-sidebar-closed')) {
+    container.classList.remove('chatgpt-sidebar-closed');
+    container.classList.add('chatgpt-sidebar-open');
+    // Refresh prompts when opening
+    loadPrompts();
+  }
 }
 
 // Toggle sidebar open/closed
