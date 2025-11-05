@@ -42,9 +42,8 @@ function createSidebar() {
   document.body.appendChild(sidebarContainer);
 
   // Add event listeners
-  // Open sidebar when hovering over the toggle/sidebar container, close when leaving
-  sidebarContainer.addEventListener('mouseenter', openSidebar);
-  sidebarContainer.addEventListener('mouseleave', closeSidebar);
+  // Toggle sidebar when clicking the toggle button
+  toggleButton.addEventListener('click', toggleSidebar);
   document
     .getElementById('sidebar-close')
     .addEventListener('click', closeSidebar);
