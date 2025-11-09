@@ -1,4 +1,3 @@
-// Main initialization
 function init() {
   createSidebar();
 }
@@ -9,8 +8,3 @@ if (document.readyState === 'loading') {
 } else {
   init();
 }
-
-// Also try to initialize after a short delay (for dynamic content)
-setTimeout(() => {
-  init();
-}, 1000);
