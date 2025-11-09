@@ -1,4 +1,5 @@
 function loadPrompts() {
+  console.log('Loading prompts into sidebar...');
   const promptsContainer = document.getElementById('sidebar-prompts');
   if (!promptsContainer) return;
 

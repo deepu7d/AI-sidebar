@@ -1,7 +1,6 @@
 // Main initialization
 function init() {
   createSidebar();
-  observeUrlChanges();
 }
 
 // Initialize when DOM is ready

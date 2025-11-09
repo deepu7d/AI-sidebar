@@ -70,8 +70,6 @@ function createSidebar() {
   // Initial load of prompts
   loadPrompts();
 
-  // Set up observer to detect new prompts
-  observeChatChanges();
 }
 
 // Toggle sidebar open/closed
