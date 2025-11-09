@@ -1,16 +1,15 @@
-// Sidebar UI creation and management
 function createSidebar() {
   // Check if sidebar already exists
   if (document.getElementById('chatgpt-sidebar-container')) {
     return;
   }
 
-  // Create sidebar container
+  // sidebar container
   const sidebarContainer = document.createElement('div');
   sidebarContainer.id = 'chatgpt-sidebar-container';
   sidebarContainer.className = 'chatgpt-sidebar-closed';
 
-  // Create toggle button
+  // toggle button
   const toggleButton = document.createElement('button');
   toggleButton.id = 'chatgpt-sidebar-toggle';
   toggleButton.innerHTML = `
@@ -20,7 +19,7 @@ function createSidebar() {
   `;
   toggleButton.title = 'Toggle Prompts Sidebar';
 
-  // Create sidebar content
+  // sidebar content
   const sidebar = document.createElement('div');
   sidebar.id = 'chatgpt-sidebar';
   sidebar.innerHTML = `
@@ -48,7 +47,7 @@ function createSidebar() {
     .getElementById('sidebar-close')
     .addEventListener('click', closeSidebar);
 
-  // Add ESC key listener to close sidebar
+  // Add listener to close sidebar when any key is pressed
   document.addEventListener('keydown', (e) => {
       const container = document.getElementById('chatgpt-sidebar-container');
       if (container && container.classList.contains('chatgpt-sidebar-open')) {
