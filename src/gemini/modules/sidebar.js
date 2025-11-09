@@ -1,16 +1,15 @@
-// Sidebar UI creation and management
 function createSidebar() {
   // Check if sidebar already exists
   if (document.getElementById('gemini-sidebar-container')) {
     return;
   }
 
-  // Create sidebar container
+  // sidebar container
   const sidebarContainer = document.createElement('div');
   sidebarContainer.id = 'gemini-sidebar-container';
   sidebarContainer.className = 'gemini-sidebar-closed';
 
-  // Create toggle button
+  // toggle button
   const toggleButton = document.createElement('button');
   toggleButton.id = 'gemini-sidebar-toggle';
   toggleButton.innerHTML = `
@@ -20,7 +19,7 @@ function createSidebar() {
   `;
   toggleButton.title = 'Toggle Prompts Sidebar';
 
-  // Create sidebar content
+  // sidebar content
   const sidebar = document.createElement('div');
   sidebar.id = 'gemini-sidebar';
   sidebar.innerHTML = `
@@ -48,13 +47,12 @@ function createSidebar() {
     .getElementById('sidebar-close')
     .addEventListener('click', closeSidebar);
 
-  // Add ESC key listener to close sidebar
+  // Add key listener to close sidebar on any key press
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' || e.key === 'Esc') {
-      const container = document.getElementById('gemini-sidebar-container');
-      if (container && container.classList.contains('gemini-sidebar-open')) {
-        closeSidebar();
-      }
+    const container = document.getElementById('gemini-sidebar-container');
+    // Check if the sidebar is open, then close it
+    if (container && container.classList.contains('gemini-sidebar-open')) {
+      closeSidebar();
     }
   });
 

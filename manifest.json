@@ -1,9 +1,8 @@
 {
   "manifest_version": 3,
   "name": "AI Chat Sidebar",
-  "version": "0.1",
+  "version": "0.2",
   "description": "View and navigate through all your chat prompts in a beautiful sidebar - works with Gemini and ChatGPT",
-  "permissions": ["activeTab"],
   "icons": {
     "512": "public/assets/icon.png"
   },
@@ -32,5 +31,14 @@
       "css": ["src/chatgpt/sidebar.css"],
       "run_at": "document_end"
     }
-  ]
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "ai-prompt-sidebar@deepanshu.com",
+      "data_collection_permissions": {
+        "required": ["none"]
+      },
+      "data_collection_description": "This add-on does not collect any user data."
+    }
+  }
 }

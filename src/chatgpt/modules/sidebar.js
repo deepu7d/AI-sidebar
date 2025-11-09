@@ -50,12 +50,10 @@ function createSidebar() {
 
   // Add ESC key listener to close sidebar
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' || e.key === 'Esc') {
       const container = document.getElementById('chatgpt-sidebar-container');
       if (container && container.classList.contains('chatgpt-sidebar-open')) {
         closeSidebar();
       }
-    }
   });
 
   // Add click outside listener to close sidebar

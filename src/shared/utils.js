@@ -1,4 +1,3 @@
-// Debounce utility function
 function debounce(func, wait) {
   let timeout;
   return function (...args) {

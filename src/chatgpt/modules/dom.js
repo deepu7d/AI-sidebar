@@ -1,4 +1,3 @@
-// DOM manipulation and prompt loading
 function loadPrompts() {
   console.log('Loading prompts into sidebar...');
   const promptsContainer = document.getElementById('sidebar-prompts');
@@ -71,39 +70,4 @@ function loadPrompts() {
     }
   }
 }
-const debouncedLoadPrompts = debounce(loadPrompts, 500);
-// Observe DOM changes to detect new prompts
-function observeChatChanges() {
-  const observer = new MutationObserver((mutations) => {
-    // Check if new user article elements were added
-    const hasNewQueries = mutations.some((mutation) => {
-      return Array.from(mutation.addedNodes).some((node) => {
-        if (node.nodeType === 1) {
-          // Element node
-          // Check if it's an article with data-turn="user"
-          if (
-            node.tagName === 'ARTICLE' &&
-            node.getAttribute('data-turn') === 'user'
-          ) {
-            return true;
-          }
-          // Or if it contains such an article
-          return node.querySelector?.('article[data-turn="user"]') !== null;
-        }
-        return false;
-      });
-    });
 
-    if (hasNewQueries) {
-      // Reload prompts when new ones are detected
-      debouncedLoadPrompts();
-    }
-  });
-
-  // Observe the main chat container
-  const chatContainer = document.body;
-  observer.observe(chatContainer, {
-    childList: true,
-    subtree: true,
-  });
-}
