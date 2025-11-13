@@ -24,7 +24,7 @@ function createSidebar() {
   sidebar.id = 'chatgpt-sidebar';
   sidebar.innerHTML = `
     <div class="sidebar-header">
-      <h2>Chat Prompts</h2>
+      <h2>Recent Chats</h2>
       <button id="sidebar-close" title="Close">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -49,10 +49,10 @@ function createSidebar() {
 
   // Add listener to close sidebar when any key is pressed
   document.addEventListener('keydown', (e) => {
-      const container = document.getElementById('chatgpt-sidebar-container');
-      if (container && container.classList.contains('chatgpt-sidebar-open')) {
-        closeSidebar();
-      }
+    const container = document.getElementById('chatgpt-sidebar-container');
+    if (container && container.classList.contains('chatgpt-sidebar-open')) {
+      closeSidebar();
+    }
   });
 
   // Add click outside listener to close sidebar
@@ -68,7 +68,6 @@ function createSidebar() {
 
   // Initial load of prompts
   loadPrompts();
-
 }
 
 // Toggle sidebar open/closed

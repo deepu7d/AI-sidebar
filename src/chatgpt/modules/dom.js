@@ -16,6 +16,7 @@ function loadPrompts() {
   promptsContainer.innerHTML = '';
 
   let promptCount = 0;
+  const promptItems = [];
 
   // Process each user article element
   userArticles.forEach((article) => {
@@ -33,7 +34,7 @@ function loadPrompts() {
 
       const promptNumber = document.createElement('span');
       promptNumber.className = 'prompt-number';
-      promptNumber.textContent = `#${promptCount}`;
+      promptNumber.textContent = `${promptCount}`;
 
       const promptText = document.createElement('div');
       promptText.className = 'prompt-text';
@@ -55,8 +56,13 @@ function loadPrompts() {
         highlightPrompt(article);
       });
 
-      promptsContainer.appendChild(promptItem);
+      promptItems.push(promptItem);
     }
+  });
+
+  // Reverse the order to show most recent prompts first
+  promptItems.reverse().forEach((promptItem) => {
+    promptsContainer.appendChild(promptItem);
   });
 
   if (promptCount === 0) {
@@ -66,7 +72,7 @@ function loadPrompts() {
     // Update count in header
     const header = document.querySelector('.sidebar-header h2');
     if (header) {
-      header.textContent = `Chat Prompts (${promptCount})`;
+      header.textContent = `Recent Chats (${promptCount})`;
     }
   }
 }
