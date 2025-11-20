@@ -1,3 +1,22 @@
+// Get sort order from local storage (shared with chatgpt sidebar)
+function getSortOrder() {
+  const stored = localStorage.getItem('chatgpt-sidebar-sort-order');
+  return stored === 'oldest-first' ? 'oldest-first' : 'newest-first'; // default to newest-first
+}
+
+// Set sort order in local storage (shared with chatgpt sidebar)
+function setSortOrder(order) {
+  localStorage.setItem('chatgpt-sidebar-sort-order', order);
+}
+
+// Toggle sort order
+function toggleSortOrder() {
+  const currentOrder = getSortOrder();
+  const newOrder = currentOrder === 'newest-first' ? 'oldest-first' : 'newest-first';
+  setSortOrder(newOrder);
+  loadPrompts(); // Reload prompts with new order
+}
+
 function loadPrompts() {
   console.log('Loading prompts into sidebar...');
   const promptsContainer = document.getElementById('sidebar-prompts');
@@ -17,6 +36,7 @@ function loadPrompts() {
 
   let promptCount = 0;
   const promptItems = [];
+  const sortOrder = getSortOrder();
 
   // Process each user article element
   userArticles.forEach((article) => {
@@ -60,8 +80,12 @@ function loadPrompts() {
     }
   });
 
-  // Reverse the order to show most recent prompts first
-  promptItems.reverse().forEach((promptItem) => {
+  // Apply sort order based on preference
+  if (sortOrder === 'newest-first') {
+    promptItems.reverse();
+  }
+  
+  promptItems.forEach((promptItem) => {
     promptsContainer.appendChild(promptItem);
   });
 

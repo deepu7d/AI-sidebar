@@ -70,6 +70,13 @@
   color: #e3e3e3;
 }
 
+.sidebar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#sidebar-sort,
 #sidebar-close {
   background-color: transparent;
   border: none;
@@ -83,6 +90,7 @@
   transition: all 0.2s ease;
 }
 
+#sidebar-sort:hover,
 #sidebar-close:hover {
   background: #474747;
 }

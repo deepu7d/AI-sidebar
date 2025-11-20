@@ -1,3 +1,22 @@
+// Get sort order from local storage
+function getSortOrder() {
+  const stored = localStorage.getItem('gemini-sidebar-sort-order');
+  return stored === 'oldest-first' ? 'oldest-first' : 'newest-first'; // default to newest-first
+}
+
+// Set sort order in local storage
+function setSortOrder(order) {
+  localStorage.setItem('gemini-sidebar-sort-order', order);
+}
+
+// Toggle sort order
+function toggleSortOrder() {
+  const currentOrder = getSortOrder();
+  const newOrder = currentOrder === 'newest-first' ? 'oldest-first' : 'newest-first';
+  setSortOrder(newOrder);
+  loadPrompts(); // Reload prompts with new order
+}
+
 function loadPrompts() {
   console.log('Loading prompts into sidebar...');
   const promptsContainer = document.getElementById('sidebar-prompts');
@@ -15,6 +34,7 @@ function loadPrompts() {
   promptsContainer.innerHTML = ''; // Clear existing prompts
   let promptCount = 0;
   const promptItems = [];
+  const sortOrder = getSortOrder();
 
   // Convert HTMLCollection to Array, reverse it, and process each user query element
   Array.from(userQueryElements).forEach((queryElement) => {
@@ -52,8 +72,12 @@ function loadPrompts() {
     }
   });
 
-  // Reverse the order to show most recent prompts first
-  promptItems.reverse().forEach((promptItem) => {
+  // Apply sort order based on preference
+  if (sortOrder === 'newest-first') {
+    promptItems.reverse();
+  }
+  
+  promptItems.forEach((promptItem) => {
     promptsContainer.appendChild(promptItem);
   });
 

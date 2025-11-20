@@ -25,11 +25,20 @@ function createSidebar() {
   sidebar.innerHTML = `
     <div class="sidebar-header">
       <h2>Recent Chats</h2>
-      <button id="sidebar-close" title="Close">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
+      <div class="sidebar-actions">
+        <button id="sidebar-sort" title="Toggle sort order">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-arrows-sort">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 9l4 -4l4 4m-4 -4v14" />
+            <path d="M21 15l-4 4l-4 -4m4 4v-14" />
+          </svg>
+        </button>
+        <button id="sidebar-close" title="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
     </div>
     <div class="sidebar-content" id="sidebar-prompts">
       <p class="no-prompts">Loading prompts...</p>
@@ -46,6 +55,9 @@ function createSidebar() {
   document
     .getElementById('sidebar-close')
     .addEventListener('click', closeSidebar);
+  document
+    .getElementById('sidebar-sort')
+    .addEventListener('click', toggleSortOrder);
 
   // Add key listener to close sidebar on any key press
   document.addEventListener('keydown', (e) => {
