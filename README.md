@@ -1,6 +1,6 @@
 # Privacy Policy for AI Chat Sidebar
 
-**Last Updated:** November 9, 2025
+**Last Updated:** March 03, 2026
 
 We are committed to protecting your privacy. This privacy policy explains how your personal information is handled by the "AI Chat Sidebar" extension.
 
