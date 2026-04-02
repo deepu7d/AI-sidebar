@@ -22,10 +22,14 @@ function loadPrompts() {
   const promptsContainer = document.getElementById('sidebar-prompts');
   if (!promptsContainer) return;
 
-  // Find all user message elements using the data-turn attribute
-  const userArticles = document.querySelectorAll('article[data-turn="user"]');
+  // Find all user message elements using the new data-message-author-role attribute
+  // Also support legacy article[data-turn="user"] for backward compatibility
+  let userElements = document.querySelectorAll('[data-message-author-role="user"]');
+  if (userElements.length === 0) {
+    userElements = document.querySelectorAll('article[data-turn="user"]');
+  }
 
-  if (userArticles.length === 0) {
+  if (userElements.length === 0) {
     promptsContainer.innerHTML =
       '<p class="no-prompts">No prompts found in this chat.</p>';
     return;
@@ -38,11 +42,11 @@ function loadPrompts() {
   const promptItems = [];
   const sortOrder = getSortOrder();
 
-  // Process each user article element
-  userArticles.forEach((article) => {
-    // Find the message content within the article
+  // Process each user message element
+  userElements.forEach((element) => {
+    // Find the message content within the element
     // Look for the whitespace-pre-wrap div which contains the actual message text
-    const messageDiv = article.querySelector('.whitespace-pre-wrap');
+    const messageDiv = element.querySelector('.whitespace-pre-wrap');
 
     if (messageDiv && messageDiv.textContent.trim()) {
       const text = messageDiv.textContent.trim();
@@ -72,8 +76,8 @@ function loadPrompts() {
 
       // Add click handler to navigate to the prompt
       promptItem.addEventListener('click', () => {
-        navigateToPrompt(article);
-        highlightPrompt(article);
+        navigateToPrompt(element);
+        highlightPrompt(element);
       });
 
       promptItems.push(promptItem);

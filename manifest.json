@@ -1,5 +1,5 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 3.1,
   "name": "AI Chat Sidebar",
   "version": "3.0",
   "description": "View and navigate through all your chat prompts in a beautiful sidebar - works with Gemini and ChatGPT",
